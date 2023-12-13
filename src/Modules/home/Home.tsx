@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllPokemons } from "../../APIs/pokemons /Poke";
+import { getAllPokemons } from "../../APIs/pokemons/Poke";
 import { Pokemon } from "./home";
 
 export const Home = () => {
