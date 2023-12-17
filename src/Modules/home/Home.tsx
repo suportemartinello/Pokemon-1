@@ -1,45 +1,49 @@
+import { SlMagnifier } from "react-icons/sl";
+
 import { useEffect, useState } from "react";
 import { getAllPokemons } from "../../APIs/pokemons/Poke";
-import { Pokemon } from "./home";
 
-export const Home = () => {
-  const [load, setLoad] = useState(false);
-  const [allPokemons, setAllPokemons] = useState<Pokemon>();
-  const getPokemons = async () => {
-    setLoad(true);
+interface allPokeInterface {
+  name: string;
+  url: string;
+}
+
+const Home = () => {
+  const [poke, setPoke] = useState<any>([]);
+
+  const pokemons = async () => {
     const response = await getAllPokemons();
-    setAllPokemons(response);
-    setLoad(false);
+    const pokemonArray = response.results;
+    setPoke(pokemonArray);
   };
 
   useEffect(() => {
-    getPokemons();
-    console.log(allPokemons);
+    pokemons();
   }, []);
 
   return (
-    <div className="bg-[#dc0a2d] flex  flex-col h-full w-full">
-      <div className=" w-full p-2 flex items-center justify-around">
-        <input
-          type="text"
-          className="rounded-3xl text-sm p-2 "
-          placeholder="Search" />
-
-        <div className="rounded-full h-10 w-10 text-center text-2xl flex justify-center items-center' bg-white">
-          <p className="text-center flex items-center text-red-500">#</p>
+    <body className=" m-1 md:m-3 lg:m-10">
+      <nav className="p-5 w-full flex justify-center">
+        <div className=" h-9 bg-white w-[70%] lg:w-[50%] flex items-center p-3 gap-5  rounded-full">
+          <input type="text" className="w-[95%]" />
+          <SlMagnifier />
         </div>
-      </div>
-      <div className=" grid grid-cols-3 gap-2  bg-white p-5">
-        {allPokemons?.results.map((poke) => (
-          <div className="flex border rounded-lg shadow-sm justify-between h-24 w-24 flex-col">
-            <p className="text-right text-sm text-gray-400">#000</p>
-            <div className="text-center"></div>
-            <div className=" rounded-lg flex items-end justify-center bg-[#efefef] h-[50%] ">
-              <p className="">{poke.name}</p>
+      </nav>
+      <div className=" grid mt-2 grid-cols-3 lg:grid-cols-5 gap-5 ">
+        {poke.map((items: allPokeInterface) => (
+          <div className=" h-40 lg:h-96 lg:w-80 p-5 flex flex-col justify-between items-center bg-gray-400     transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-105 hover:bg-purple-400 duration-75 ...">
+            <div className="h-[80%] flex items-center">
+              <h1>Imagem</h1>
+              <img src="" alt="" />
+            </div>
+            <div>
+              <h1 className="text-white">{items.name}</h1>
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </body>
   );
 };
+
+export default Home;
