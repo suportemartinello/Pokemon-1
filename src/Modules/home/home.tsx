@@ -1,7 +1,7 @@
 import { SlMagnifier } from "react-icons/sl";
-
 import { useEffect, useState } from "react";
 import { getAllPokemons } from "../../APIs/pokemons/Poke";
+import { useNavigate } from "react-router-dom";
 
 interface allPokeInterface {
   name: string;
@@ -11,7 +11,14 @@ interface allPokeInterface {
 const Home = () => {
   const [poke, setPoke] = useState<any>([]);
 
+  const navigate = useNavigate();
+
   
+  const hundleDetalhes = (id : string) => {
+
+    navigate(`detalhes/${id}`)
+
+  }
 
 
   const pokemons = async () => {
@@ -35,7 +42,7 @@ const Home = () => {
       </nav>
       <div className=" grid mt-2 grid-cols-3 lg:grid-cols-5 gap-5 ">
         {poke.map((items: allPokeInterface, index:any) => (
-          <div className=" h-40 lg:h-[500px]   p-5 flex flex-col justify-between items-center bg-gray-400   transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-105 hover:bg-purple-400 duration-75 ...">
+          <div onClick={() => hundleDetalhes(index)} className=" h-40 lg:h-[500px]   p-5 flex flex-col justify-between items-center bg-gray-400   transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-105 hover:bg-purple-400 duration-75 ...">
             <div className="h-[80%] flex items-center">
               <img src={`https://raw.githubusercontent.com/wellrccity/pokedex-html-js/master/assets/img/pokemons/poke_${index + 1}.gif`} alt="" />
               <img src="" alt="" />
